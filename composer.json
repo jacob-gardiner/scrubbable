@@ -1,0 +1,54 @@
+{
+    "name": "jacob-gardiner/scrubbable",
+    "description": "Data scrubber for Laravel projects",
+    "keywords": [
+        "jacob-gardiner",
+        "scrubbable"
+    ],
+    "homepage": "https://github.com/jacob-gardiner/scrubbable",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Jacob Gardiner",
+            "email": "jacobegardiner@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.1",
+        "illuminate/support": "^6.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^4.0",
+        "phpunit/phpunit": "^8.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "JacobGardiner\\Scrubbable\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "JacobGardiner\\Scrubbable\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "JacobGardiner\\Scrubbable\\ScrubbableServiceProvider"
+            ],
+            "aliases": {
+                "Scrubbable": "JacobGardiner\\Scrubbable\\ScrubbableFacade"
+            }
+        }
+    }
+}
