@@ -40,7 +40,9 @@ class ScrubbableServiceProvider extends ServiceProvider
             ], 'lang');*/
 
             // Registering package commands.
-            // $this->commands([]);
+             $this->commands([
+                 ScrubDatabase::class
+             ]);
         }
     }
 
@@ -51,10 +53,5 @@ class ScrubbableServiceProvider extends ServiceProvider
     {
         // Automatically apply the package configuration
         $this->mergeConfigFrom(__DIR__.'/../config/config.php', 'scrubbable');
-
-        // Register the main class to use with the facade
-        $this->app->singleton('scrubbable', function () {
-            return new Scrubbable;
-        });
     }
 }
