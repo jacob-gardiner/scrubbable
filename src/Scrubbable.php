@@ -2,31 +2,35 @@
 
 namespace JacobGardiner\Scrubbable;
 
-use Illuminate\Database\Eloquent\Builder;
 
 trait Scrubbable
 {
-    public function scrub()
+    public function scrub($chunkSize = 5)
     {
-        $chunkSize = 5;
         $count = 0;
-        $modelClass = $this->model;
-        $query = $modelClass::query();
+        $query = $this->model::query();
         $this->scrubScope($query);
-        // Scrub a dub dub
-        $query->chunkById(5, function ($models) use ($modelClass, $chunkSize, &$count) {
+
+        // Scrub result set chunk by chunk
+        $query->chunkById($chunkSize, function ($models) use ( $chunkSize, &$count) {
             $count += $chunkSize;
-            $models->each(function ($model) use ($modelClass) {
-                $model->update($modelClass::factory()->scrubAttributes());
+            $models->each(function ($model) {
+                $model->update($this->model::factory()->scrubAttributes());
             });
         });
 
         return $count;
     }
 
+    /**
+     * Set query scope to limit record sets to be included
+     * when scrubbing
+     *
+     * @param $query
+     */
     public function scrubScope($query)
     {
-        //
+        // $query->where('status', 'active');
     }
 
     abstract public function scrubAttributes(): iterable;

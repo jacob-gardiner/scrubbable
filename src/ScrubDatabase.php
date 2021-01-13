@@ -19,7 +19,7 @@ class ScrubDatabase extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Scrub Database';
 
     /**
      * Create a new command instance.
@@ -38,8 +38,10 @@ class ScrubDatabase extends Command
      */
     public function handle()
     {
-        $factories = ClassFinder::getClassesInNamespace('Database\Factories', ClassFinder::RECURSIVE_MODE);
+        // Get all factories
+        $factories = ClassFinder::getClassesInNamespace(config('scrubbable.factory_path'), ClassFinder::RECURSIVE_MODE);
 
+        // Grab all factories that are implementing the Scrubbable trait
         $scrubFactories = collect($factories)->filter(fn ($factory) => in_array(Scrubbable::class, class_uses($factory)));
 
         $scrubFactories->each(function ($factory) {
